@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "render": {
+      "command": "render-mcp",
+      "args": ["start"],
+      "env": {
+        "RENDER_API_KEY": "rnd_L2HIiACmMU0Zh9dScatlQSCLmp1s"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
