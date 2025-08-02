@@ -40,7 +40,10 @@
       "Bash(grep:*)",
       "Bash(npx next dev:*)",
       "Bash(npm run:*)",
-      "Bash(npx kill-port:*)"
+      "Bash(npx kill-port:*)",
+      "Bash(render services create:*)",
+      "Bash(render:*)",
+      "Bash(powershell:*)"
     ],
     "deny": []
   }

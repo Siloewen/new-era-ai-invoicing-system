@@ -33,6 +33,11 @@ async function bootstrap() {
         return callback(null, true);
       }
       
+      // Allow production frontend URL
+      if (origin === process.env.FRONTEND_URL || origin === 'https://invoicing-frontend.onrender.com') {
+        return callback(null, true);
+      }
+      
       // Block all other origins
       return callback(new Error('Not allowed by CORS'), false);
     },

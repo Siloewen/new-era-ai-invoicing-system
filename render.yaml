@@ -1,43 +1,52 @@
 services:
   # Backend API Service
-  - type: web
-    name: new-era-invoicing-backend
+  - type: web_service
+    name: invoicing-backend
     env: node
-    plan: free
-    buildCommand: cd backend && npm install && npx prisma generate && npm run build
-    startCommand: cd backend && npm start
+    plan: starter
+    buildCommand: |
+      npm install
+      npm run prisma:generate
+      npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        generateValue: true
+        fromDatabase:
+          name: invoicing-database
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: invoicing-redis
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
-    autoDeploy: true
-    branch: main
-    rootDir: .
-    
-  # Frontend Service  
-  - type: web
-    name: new-era-invoicing-frontend
-    env: node
-    plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npm start
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: NEXT_PUBLIC_API_URL
-        value: https://new-era-invoicing-backend.onrender.com
-    autoDeploy: true
-    branch: main
-    rootDir: .
+      - key: FRONTEND_URL
+        value: https://invoicing-frontend.onrender.com
 
-# Database
+  # Frontend Service
+  - type: web_service
+    name: invoicing-frontend
+    env: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://invoicing-backend.onrender.com
+
 databases:
-  - name: new-era-invoicing-db
-    databaseName: invoicing
+  - name: invoicing-database
+    databaseName: invoicing_db
     user: invoicing_user
-    plan: free
+    plan: starter
+
+services:
+  - type: redis
+    name: invoicing-redis
+    plan: starter
+    maxmemoryPolicy: allkeys-lru

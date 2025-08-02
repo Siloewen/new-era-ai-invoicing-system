@@ -10,6 +10,7 @@ import { TemplatesModule } from './modules/templates/templates.module';
 import { UsersModule } from './modules/users/users.module';
 import { FilesModule } from './modules/files/files.module';
 import { PdfModule } from './modules/pdf/pdf.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PdfModule } from './modules/pdf/pdf.module';
     TemplatesModule,
     FilesModule,
     PdfModule,
+    HealthModule,
   ],
 })
 export class AppModule {}
