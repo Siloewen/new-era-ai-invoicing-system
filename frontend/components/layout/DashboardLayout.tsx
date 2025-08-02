@@ -6,10 +6,20 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <Navigation />
-      <main className="lg:pl-72">
-        <div className="px-4 py-6 sm:px-6 lg:px-8">
+      <main 
+        className="p-8" 
+        style={{ 
+          marginLeft: '288px', 
+          padding: '2rem',
+          minHeight: '100vh'
+        }}
+      >
+        <div 
+          className="max-w-7xl mx-auto"
+          style={{ maxWidth: '80rem', margin: '0 auto' }}
+        >
           {children}
         </div>
       </main>

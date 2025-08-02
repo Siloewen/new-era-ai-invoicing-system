@@ -25,7 +25,22 @@
       "Bash(docker-compose up:*)",
       "Bash(timeout:*)",
       "Bash(docker-compose logs:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(git checkout:*)",
+      "Bash(npm run start:dev:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(npm start)",
+      "Bash(rm:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(npx next dev:*)",
+      "Bash(npm run:*)",
+      "Bash(npx kill-port:*)"
     ],
     "deny": []
   }

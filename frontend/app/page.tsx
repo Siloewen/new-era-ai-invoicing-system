@@ -20,7 +20,7 @@ export default function HomePage() {
         <p className="text-xl text-gray-600 mb-8">
           Redirecting to dashboard...
         </p>
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
       </div>
     </div>
   );

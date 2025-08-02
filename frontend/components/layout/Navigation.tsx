@@ -1,17 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { clsx } from 'clsx';
-import {
-  HomeIcon,
-  UserGroupIcon,
-  DocumentTextIcon,
-  CurrencyDollarIcon,
-  CogIcon,
-  Bars3Icon,
-  XMarkIcon,
+import { 
+  HomeIcon, 
+  UserGroupIcon, 
+  DocumentTextIcon, 
+  CurrencyDollarIcon, 
+  DocumentDuplicateIcon 
 } from '@heroicons/react/24/outline';
 
 const navigation = [
@@ -19,103 +15,270 @@ const navigation = [
   { name: 'Clients', href: '/clients', icon: UserGroupIcon },
   { name: 'Contracts', href: '/contracts', icon: DocumentTextIcon },
   { name: 'Invoices', href: '/invoices', icon: CurrencyDollarIcon },
-  { name: 'Templates', href: '/templates', icon: CogIcon },
+  { name: 'Templates', href: '/templates', icon: DocumentDuplicateIcon },
 ];
 
 export function Navigation() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
   return (
-    <>
-      {/* Mobile sidebar */}
-      <div className={clsx('relative z-50 lg:hidden', sidebarOpen ? 'block' : 'hidden')}>
-        <div className="fixed inset-0 bg-gray-900/80" onClick={() => setSidebarOpen(false)} />
-        <div className="fixed inset-y-0 left-0 z-50 w-64 bg-white px-6 py-6">
-          <div className="flex items-center justify-between">
-            <Link href="/dashboard" className="text-xl font-bold text-gray-900">
-              New Era AI
-            </Link>
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-700"
-              onClick={() => setSidebarOpen(false)}
+    <nav 
+      className="fixed left-0 top-0 h-full border-r"
+      style={{ 
+        width: '288px', 
+        maxWidth: '288px', 
+        minWidth: '288px',
+        background: 'linear-gradient(to bottom right, rgba(255,255,255,0.95), rgba(239,246,255,0.9), rgba(238,242,255,0.95))',
+        backdropFilter: 'blur(24px)',
+        borderRight: '1px solid rgba(255,255,255,0.3)',
+        boxShadow: '0 20px 40px -12px rgba(0,0,0,0.25), 0 10px 20px -5px rgba(0,0,0,0.1)'
+      }}
+    >
+      <div className="flex flex-col h-full relative">
+        {/* Decorative Background */}
+        <div 
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom right, rgba(59,130,246,0.05), rgba(147,51,234,0.05), rgba(99,102,241,0.05))'
+          }}
+        ></div>
+        
+        {/* Header */}
+        <div 
+          className="relative p-6 border-b"
+          style={{ 
+            padding: '1.5rem',
+            borderBottom: '1px solid rgba(255,255,255,0.3)'
+          }}
+        >
+          <Link href="/dashboard" className="flex items-center space-x-3 group">
+            <div 
+              className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105"
+              style={{
+                width: '40px',
+                height: '40px',
+                background: 'linear-gradient(to bottom right, #2563eb, #4f46e5, #9333ea)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+                transition: 'all 0.3s ease'
+              }}
             >
-              <XMarkIcon className="h-6 w-6" />
-            </button>
-          </div>
-          <nav className="mt-8">
-            <ul className="space-y-1">
-              {navigation.map((item) => (
-                <li key={item.name}>
+              <span 
+                className="text-white font-bold text-lg"
+                style={{ color: 'white', fontWeight: 'bold', fontSize: '18px' }}
+              >
+                N
+              </span>
+            </div>
+            <div>
+              <span 
+                className="text-xl font-bold block"
+                style={{
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  background: 'linear-gradient(to right, #2563eb, #9333ea, #4f46e5)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  display: 'block'
+                }}
+              >
+                New Era AI
+              </span>
+              <span 
+                className="text-xs block"
+                style={{ fontSize: '12px', color: '#6b7280', display: 'block' }}
+              >
+                Invoicing System
+              </span>
+            </div>
+          </Link>
+        </div>
+        
+        {/* Navigation Links */}
+        <div className="relative flex-1" style={{ padding: '1rem' }}>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {navigation.map((item, index) => {
+              const isActive = pathname === item.href;
+              return (
+                <li 
+                  key={item.name} 
+                  style={{ 
+                    marginBottom: '12px',
+                    animationDelay: `${index * 50}ms` 
+                  }}
+                >
                   <Link
                     href={item.href}
-                    className={clsx(
-                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                      pathname === item.href
-                        ? 'bg-primary-50 text-primary-600'
-                        : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
-                    )}
+                    className="flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 group"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      textDecoration: 'none',
+                      transition: 'all 0.3s ease',
+                      background: isActive 
+                        ? 'linear-gradient(to right, #3b82f6, #4f46e5)' 
+                        : 'transparent',
+                      color: isActive ? 'white' : '#4b5563',
+                      boxShadow: isActive 
+                        ? '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)' 
+                        : 'none',
+                      transform: isActive ? 'scale(1.05)' : 'scale(1)'
+                    }}
                   >
-                    <item.icon className="h-6 w-6 shrink-0" />
-                    {item.name}
+                    <div 
+                      className="p-2 rounded-xl transition-all duration-300"
+                      style={{
+                        padding: '8px',
+                        borderRadius: '12px',
+                        background: isActive 
+                          ? 'rgba(255,255,255,0.2)' 
+                          : 'transparent',
+                        boxShadow: isActive ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'
+                      }}
+                    >
+                      <item.icon 
+                        className="h-5 w-5 transition-all duration-300"
+                        style={{
+                          width: '20px',
+                          height: '20px',
+                          color: isActive ? 'white' : '#6b7280'
+                        }}
+                      />
+                    </div>
+                    <span style={{ fontWeight: '500' }}>{item.name}</span>
+                    {isActive && (
+                      <div 
+                        className="ml-auto w-2 h-2 bg-white rounded-full shadow-sm animate-pulse"
+                        style={{
+                          marginLeft: 'auto',
+                          width: '8px',
+                          height: '8px',
+                          backgroundColor: 'white',
+                          borderRadius: '50%',
+                          boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
+                        }}
+                      ></div>
+                    )}
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </nav>
+              );
+            })}
+          </ul>
         </div>
-      </div>
 
-      {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-          <div className="flex h-16 shrink-0 items-center">
-            <Link href="/dashboard" className="text-xl font-bold text-gray-900">
-              New Era AI
-            </Link>
-          </div>
-          <nav className="flex flex-1 flex-col">
-            <ul className="flex flex-1 flex-col gap-y-7">
-              <li>
-                <ul className="space-y-1">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={clsx(
-                          'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6',
-                          pathname === item.href
-                            ? 'bg-primary-50 text-primary-600'
-                            : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'
-                        )}
-                      >
-                        <item.icon className="h-6 w-6 shrink-0" />
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-
-      {/* Mobile menu button */}
-      <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:hidden">
-        <button
-          type="button"
-          className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
-          onClick={() => setSidebarOpen(true)}
+        {/* Quick Actions */}
+        <div 
+          className="relative border-t"
+          style={{ 
+            padding: '1rem',
+            borderTop: '1px solid rgba(255,255,255,0.3)'
+          }}
         >
-          <Bars3Icon className="h-6 w-6" />
-        </button>
-        <div className="h-6 w-px bg-gray-200 lg:hidden" />
-        <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-          <div className="relative flex flex-1"></div>
+          <div 
+            className="rounded-xl p-4 border"
+            style={{
+              background: 'linear-gradient(to right, rgba(59,130,246,0.1), rgba(99,102,241,0.1))',
+              backdropFilter: 'blur(8px)',
+              borderRadius: '12px',
+              padding: '1rem',
+              border: '1px solid rgba(255,255,255,0.3)'
+            }}
+          >
+            <div className="text-center">
+              <div 
+                className="w-8 h-8 rounded-xl mx-auto mb-2 flex items-center justify-center"
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  background: 'linear-gradient(to bottom right, #10b981, #14b8a6)',
+                  borderRadius: '12px',
+                  margin: '0 auto 8px auto',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <span 
+                  className="text-white text-xs font-bold"
+                  style={{ color: 'white', fontSize: '12px', fontWeight: 'bold' }}
+                >
+                  +
+                </span>
+              </div>
+              <p 
+                className="text-xs font-medium mb-2"
+                style={{ fontSize: '12px', fontWeight: '500', color: '#374151', marginBottom: '8px' }}
+              >
+                Quick Actions
+              </p>
+              <div className="flex space-x-2" style={{ display: 'flex', gap: '8px' }}>
+                <Link 
+                  href="/clients" 
+                  className="text-xs py-1 px-2"
+                  style={{
+                    fontSize: '12px',
+                    padding: '4px 8px',
+                    backgroundColor: 'transparent',
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Client
+                </Link>
+                <Link 
+                  href="/invoices" 
+                  className="text-xs py-1 px-2"
+                  style={{
+                    fontSize: '12px',
+                    padding: '4px 8px',
+                    backgroundColor: 'transparent',
+                    color: '#6b7280',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Invoice
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div 
+          className="relative border-t"
+          style={{ 
+            padding: '1rem',
+            borderTop: '1px solid rgba(255,255,255,0.3)'
+          }}
+        >
+          <div className="text-center">
+            <div 
+              className="text-xs"
+              style={{ fontSize: '12px', color: '#6b7280' }}
+            >
+              Invoicing System v1.0
+            </div>
+            <div 
+              className="text-xs mt-1"
+              style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}
+            >
+              Powered by New Era AI
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </nav>
   );
 }

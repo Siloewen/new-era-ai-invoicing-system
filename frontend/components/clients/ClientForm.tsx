@@ -60,7 +60,7 @@ export function ClientForm({ client, onSave, onCancel, isSubmitting }: ClientFor
                 required
                 value={formData.name}
                 onChange={(e) => handleChange('name', e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter client name"
               />
             </div>
@@ -74,7 +74,7 @@ export function ClientForm({ client, onSave, onCancel, isSubmitting }: ClientFor
                 id="contactName"
                 value={formData.contactName}
                 onChange={(e) => handleChange('contactName', e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter contact name"
               />
             </div>
@@ -88,7 +88,7 @@ export function ClientForm({ client, onSave, onCancel, isSubmitting }: ClientFor
                 id="contactEmail"
                 value={formData.contactEmail}
                 onChange={(e) => handleChange('contactEmail', e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter contact email"
               />
             </div>
@@ -102,7 +102,7 @@ export function ClientForm({ client, onSave, onCancel, isSubmitting }: ClientFor
                 rows={3}
                 value={formData.billingAddress}
                 onChange={(e) => handleChange('billingAddress', e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter billing address"
               />
             </div>
@@ -115,7 +115,7 @@ export function ClientForm({ client, onSave, onCancel, isSubmitting }: ClientFor
                 id="status"
                 value={formData.status}
                 onChange={(e) => handleChange('status', e.target.value as any)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="ACTIVE">Active</option>
                 <option value="INACTIVE">Inactive</option>

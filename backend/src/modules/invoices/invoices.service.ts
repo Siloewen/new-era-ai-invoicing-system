@@ -1,11 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { PdfService } from '../pdf/pdf.service';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
 
 @Injectable()
 export class InvoicesService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private pdfService: PdfService,
+  ) {}
 
   async create(createInvoiceDto: CreateInvoiceDto) {
     const { lineItems, ...invoiceData } = createInvoiceDto;
@@ -103,5 +107,40 @@ export class InvoicesService {
     return this.prisma.invoice.delete({
       where: { id },
     });
+  }
+
+  async generatePdf(id: string): Promise<string> {
+    const invoice = await this.findOne(id);
+    
+    const invoiceData = {
+      invoiceNumber: invoice.invoiceNumber,
+      issueDate: invoice.issueDate.toISOString(),
+      dueDate: invoice.dueDate.toISOString(),
+      client: {
+        name: invoice.client?.name || 'Unknown Client',
+        contactName: invoice.client?.contactName,
+        contactEmail: invoice.client?.contactEmail,
+        billingAddress: invoice.client?.billingAddress,
+      },
+      lineItems: (invoice.lineItems || []).map(item => ({
+        description: item.description,
+        quantity: item.quantity.toString(),
+        unitPrice: item.unitPrice.toString(),
+        amount: item.amount.toString(),
+      })),
+      subtotal: invoice.subtotal.toString(),
+      tax: invoice.tax.toString(),
+      total: invoice.total.toString(),
+    };
+
+    const pdfPath = await this.pdfService.generateInvoicePdf(invoiceData);
+    
+    // Update invoice with PDF storage key
+    await this.prisma.invoice.update({
+      where: { id },
+      data: { pdfStorageKey: pdfPath },
+    });
+
+    return pdfPath;
   }
 }

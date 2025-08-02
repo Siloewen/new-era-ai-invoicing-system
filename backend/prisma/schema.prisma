@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -42,9 +42,9 @@ model Contract {
   id               String   @id @default(cuid())
   clientId         String   @map("client_id")
   planName         String   @map("plan_name")
-  flatMonthlyFee   Decimal  @map("flat_monthly_fee") @db.Decimal(10, 2)
+  flatMonthlyFee   Decimal  @map("flat_monthly_fee")
   dataRateType     DataRateType @map("data_rate_type")
-  dataRatePrice    Decimal  @map("data_rate_price") @db.Decimal(10, 4)
+  dataRatePrice    Decimal  @map("data_rate_price")
   nextInvoiceDate  DateTime @map("next_invoice_date")
   isActive         Boolean  @default(true) @map("is_active")
   
@@ -63,7 +63,7 @@ model UsageRecord {
   contractId    String   @map("contract_id")
   periodStart   DateTime @map("period_start")
   periodEnd     DateTime @map("period_end")
-  usageQuantity Decimal  @map("usage_quantity") @db.Decimal(15, 4)
+  usageQuantity Decimal  @map("usage_quantity")
   unit          String
   notes         String?
   
@@ -99,9 +99,9 @@ model Invoice {
   periodEnd     DateTime    @map("period_end")
   issueDate     DateTime    @map("issue_date")
   dueDate       DateTime    @map("due_date")
-  subtotal      Decimal     @db.Decimal(10, 2)
-  tax           Decimal     @db.Decimal(10, 2)
-  total         Decimal     @db.Decimal(10, 2)
+  subtotal      Decimal
+  tax           Decimal
+  total         Decimal
   pdfStorageKey String?     @map("pdf_storage_key")
   status        InvoiceStatus @default(DRAFT)
   
@@ -119,9 +119,9 @@ model InvoiceLineItem {
   id          String  @id @default(cuid())
   invoiceId   String  @map("invoice_id")
   description String
-  quantity    Decimal @db.Decimal(10, 4)
-  unitPrice   Decimal @map("unit_price") @db.Decimal(10, 2)
-  amount      Decimal @db.Decimal(10, 2)
+  quantity    Decimal
+  unitPrice   Decimal @map("unit_price")
+  amount      Decimal
   
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

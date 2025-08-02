@@ -11,7 +11,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={clsx(
-          'rounded-lg border border-gray-200 bg-white shadow-sm',
+          'rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200',
           className
         )}
         {...props}
@@ -29,7 +29,7 @@ const CardHeader = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={clsx('px-6 py-4 border-b border-gray-200', className)}
+        className={clsx('px-6 py-5 border-b border-gray-100', className)}
         {...props}
       >
         {children}
@@ -45,7 +45,7 @@ const CardContent = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={clsx('px-6 py-4', className)}
+        className={clsx('px-6 py-5', className)}
         {...props}
       >
         {children}
