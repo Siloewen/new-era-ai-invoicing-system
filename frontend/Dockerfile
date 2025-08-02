@@ -6,13 +6,16 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci --only=production
 
 # Copy source code
 COPY . .
 
-# Expose port
-EXPOSE 3000
+# Build the application
+RUN npm run build
 
-# Start development server
-CMD ["npm", "run", "dev"]
+# Expose port (Render uses PORT env var)
+EXPOSE $PORT
+
+# Start the application
+CMD ["npm", "start"]

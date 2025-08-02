@@ -4,18 +4,22 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
+COPY prisma ./prisma/
 
 # Install dependencies
-RUN npm install
-
-# Copy source code
-COPY . .
+RUN npm ci --only=production
 
 # Generate Prisma client
 RUN npx prisma generate
 
-# Expose port
-EXPOSE 3001
+# Copy source code
+COPY . .
 
-# Start development server
-CMD ["npm", "run", "start:dev"]
+# Build the application
+RUN npm run build
+
+# Expose port (Render uses PORT env var)
+EXPOSE $PORT
+
+# Start the application
+CMD ["npm", "start"]

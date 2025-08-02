@@ -1,0 +1,43 @@
+services:
+  # Backend API Service
+  - type: web
+    name: new-era-invoicing-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install && npx prisma generate && npm run build
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+    autoDeploy: true
+    branch: main
+    rootDir: .
+    
+  # Frontend Service  
+  - type: web
+    name: new-era-invoicing-frontend
+    env: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://new-era-invoicing-backend.onrender.com
+    autoDeploy: true
+    branch: main
+    rootDir: .
+
+# Database
+databases:
+  - name: new-era-invoicing-db
+    databaseName: invoicing
+    user: invoicing_user
+    plan: free
