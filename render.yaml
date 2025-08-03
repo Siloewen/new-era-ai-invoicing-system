@@ -4,9 +4,10 @@ services:
     name: invoicing-backend
     env: node
     plan: starter
+    rootDir: backend
     buildCommand: |
       npm install
-      npm run prisma:generate
+      npx prisma generate
       npm run build
     startCommand: npm start
     envVars:
@@ -15,38 +16,26 @@ services:
       - key: PORT
         value: 10000
       - key: DATABASE_URL
-        fromDatabase:
-          name: invoicing-database
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: invoicing-redis
-          property: connectionString
+        value: postgresql://postgres.cgptebrugnqszqdinzvj:NewEraAI2024!@aws-0-us-east-1.pooler.supabase.com:5432/postgres?schema=public&sslmode=require
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
         value: https://invoicing-frontend.onrender.com
+      - key: SUPABASE_URL
+        value: https://cgptebrugnqszqdinzvj.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNncHRlYnJ1Z25xc3pxZGluenZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxODA2NDksImV4cCI6MjA2OTc1NjY0OX0.nLBLjLhvAHMOr7xbvTye6xQl3X4Zpllir7PpJwy64Ow
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNncHRlYnJ1Z25xc3pxZGluenZqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NDE4MDY0OSwiZXhwIjoyMDY5NzU2NjQ5fQ.-uKcPhVPMFvw73ctSsX9aWs3HNY5S3JQUfAzg5lUVeM
 
-  # Frontend Service
+  # Frontend Service  
   - type: web_service
     name: invoicing-frontend
     env: node
     plan: starter
+    rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NEXT_PUBLIC_API_URL
         value: https://invoicing-backend.onrender.com
-
-databases:
-  - name: invoicing-database
-    databaseName: invoicing_db
-    user: invoicing_user
-    plan: starter
-
-services:
-  - type: redis
-    name: invoicing-redis
-    plan: starter
-    maxmemoryPolicy: allkeys-lru
