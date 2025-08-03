@@ -30,17 +30,21 @@ export function ClientList({ clients, onEdit, onDelete, onAdd }: ClientListProps
 
   if (clients.length === 0) {
     return (
-      <div className="card-gradient p-16 text-center">
-        <div className="animate-fade-in">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 animate-float">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-16 text-center">
+        <div>
+          <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(to bottom right, #3b82f6, #4f46e5)'}}>
             <UserGroupIcon className="h-12 w-12 text-white" />
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-3">No clients yet</h3>
           <p className="text-gray-500 text-lg mb-8 max-w-md mx-auto">
             Start building your client relationships by adding your first client
           </p>
-          <button onClick={onAdd} className="btn-primary">
-            <PlusIcon className="h-5 w-5 mr-2" />
+          <button 
+            onClick={onAdd} 
+            className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+            style={{background: 'linear-gradient(to right, #2563eb, #4f46e5)'}}
+          >
+            <PlusIcon className="h-5 w-5 mr-2 inline" />
             Add Your First Client
           </button>
         </div>
@@ -55,14 +59,13 @@ export function ClientList({ clients, onEdit, onDelete, onAdd }: ClientListProps
         {clients.map((client, index) => (
           <div 
             key={client.id} 
-            className="card-gradient group cursor-pointer card-hover animate-slide-up"
-            style={{ animationDelay: `${index * 100}ms` }}
+            className="bg-white rounded-2xl shadow-lg border border-gray-100 group cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="p-6">
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg" style={{background: 'linear-gradient(to bottom right, #3b82f6, #4f46e5)'}}>
                     {client.name.charAt(0)}
                   </div>
                   <div className="flex-1">
@@ -75,10 +78,10 @@ export function ClientList({ clients, onEdit, onDelete, onAdd }: ClientListProps
                   </div>
                 </div>
                 
-                <span className={`status-badge ${
-                  client.status === 'ACTIVE' ? 'status-active' :
-                  client.status === 'INACTIVE' ? 'status-inactive' :
-                  'status-suspended'
+                <span className={`inline-flex items-center px-3 py-1.5 text-sm font-semibold rounded-full ${
+                  client.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' :
+                  client.status === 'INACTIVE' ? 'bg-gray-100 text-gray-600 border border-gray-200' :
+                  'bg-red-100 text-red-700 border border-red-200'
                 }`}>
                   <div className={`w-2 h-2 rounded-full mr-2 ${
                     client.status === 'ACTIVE' ? 'bg-emerald-500' : 

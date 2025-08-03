@@ -6,13 +6,13 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen" style={{background: 'linear-gradient(to bottom right, #f8fafc, #eff6ff, #eef2ff)'}}>
       <Navigation />
       <main 
-        className="p-8" 
+        className="p-4" 
         style={{ 
           marginLeft: '288px', 
-          padding: '2rem',
+          padding: '1rem',
           minHeight: '100vh'
         }}
       >

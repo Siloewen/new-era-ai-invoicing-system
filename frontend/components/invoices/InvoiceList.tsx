@@ -2,8 +2,6 @@
 
 import { format } from 'date-fns';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon, DocumentArrowDownIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
-import { Button } from '../ui/Button';
 import { Invoice } from '../../types';
 
 interface InvoiceListProps {
@@ -33,21 +31,32 @@ export function InvoiceList({ invoices, onView, onEdit, onDelete, onAdd, onGener
     }
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>Invoices</CardTitle>
-            <p className="text-sm text-gray-600 mt-1">Manage and track your invoices</p>
+  if (invoices.length === 0) {
+    return (
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-16 text-center">
+        <div>
+          <div className="w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(to bottom right, #3b82f6, #4f46e5)'}}>
+            <CurrencyDollarIcon className="h-12 w-12 text-white" />
           </div>
-          <Button onClick={onAdd} size="sm">
-            <PlusIcon className="h-4 w-4 mr-2" />
-            Create Invoice
-          </Button>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">No invoices yet</h3>
+          <p className="text-gray-500 text-lg mb-8 max-w-md mx-auto">
+            Get started by creating your first invoice
+          </p>
+          <button 
+            onClick={onAdd} 
+            className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+            style={{background: 'linear-gradient(to right, #2563eb, #4f46e5)'}}
+          >
+            <PlusIcon className="h-5 w-5 mr-2 inline" />
+            Create Your First Invoice
+          </button>
         </div>
-      </CardHeader>
-      <CardContent className="p-0">
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
         <div className="overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -109,65 +118,43 @@ export function InvoiceList({ invoices, onView, onEdit, onDelete, onAdd, onGener
                   </td>
                   <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
+                      <button
                         onClick={() => onView(invoice)}
-                        className="hover:bg-blue-50 hover:text-blue-600"
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
                         title="View Invoice"
                       >
                         <EyeIcon className="h-4 w-4" />
-                      </Button>
+                      </button>
                       {onGeneratePdf && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
+                        <button
                           onClick={() => onGeneratePdf(invoice.id)}
-                          className="hover:bg-green-50 hover:text-green-600"
+                          className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200"
                           title="Download PDF"
                         >
                           <DocumentArrowDownIcon className="h-4 w-4" />
-                        </Button>
+                        </button>
                       )}
-                      <Button
-                        variant="ghost"
-                        size="sm"
+                      <button
                         onClick={() => onEdit(invoice)}
-                        className="hover:bg-blue-50 hover:text-blue-600"
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
                         title="Edit Invoice"
                       >
                         <PencilIcon className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
+                      </button>
+                      <button
                         onClick={() => onDelete(invoice.id)}
-                        className="hover:bg-red-50 hover:text-red-600"
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
                         title="Delete Invoice"
                       >
                         <TrashIcon className="h-4 w-4" />
-                      </Button>
+                      </button>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {invoices.length === 0 && (
-            <div className="text-center py-16">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CurrencyDollarIcon className="h-8 w-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No invoices yet</h3>
-              <p className="text-gray-500 mb-6">Get started by creating your first invoice</p>
-              <Button onClick={onAdd}>
-                <PlusIcon className="h-4 w-4 mr-2" />
-                Create Your First Invoice
-              </Button>
-            </div>
-          )}
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

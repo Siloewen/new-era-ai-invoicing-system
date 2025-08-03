@@ -10,7 +10,8 @@
   }
   
   body {
-    @apply antialiased bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 min-h-screen;
+    @apply antialiased min-h-screen;
+    background: linear-gradient(to bottom right, #f8fafc, #eff6ff, #eef2ff);
   }
 
   * {

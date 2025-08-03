@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ModernLayout } from '../../components/layout/ModernLayout';
+import { DashboardLayout } from '../../components/layout/DashboardLayout';
 import { InvoiceList } from '../../components/invoices/InvoiceList';
 import { useInvoices, useDeleteInvoice } from '../../lib/hooks/useInvoices';
 import { pdfApi } from '../../lib/api';
@@ -9,28 +9,75 @@ import { Invoice } from '../../types';
 
 export default function InvoicesPage() {
   // Temporary sample data - replace with API later  
-  const invoices = [
+  const invoices: Invoice[] = [
     {
       id: '1',
+      clientId: '1',
+      contractId: '1',
       invoiceNumber: 'INV-001',
-      client: { id: '1', name: 'Acme Corporation' },
+      periodStart: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      periodEnd: new Date().toISOString(),
+      client: { 
+        id: '1', 
+        name: 'Acme Corporation',
+        status: 'ACTIVE' as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
       issueDate: new Date().toISOString(),
       dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
       subtotal: '1000.00',
       tax: '100.00', 
       total: '1100.00',
-      status: 'SENT' as const,
+      status: 'SENT',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     },
     {
       id: '2',
-      invoiceNumber: 'INV-002', 
-      client: { id: '2', name: 'Tech Solutions Inc' },
+      clientId: '2',
+      contractId: '2',
+      invoiceNumber: 'INV-002',
+      periodStart: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      periodEnd: new Date().toISOString(),
+      client: { 
+        id: '2', 
+        name: 'Tech Solutions Inc',
+        status: 'ACTIVE' as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
       issueDate: new Date().toISOString(),
       dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
       subtotal: '2500.00',
       tax: '250.00',
       total: '2750.00', 
-      status: 'DRAFT' as const,
+      status: 'PAID',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: '3',
+      clientId: '3',
+      contractId: '3',
+      invoiceNumber: 'INV-003',
+      periodStart: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      periodEnd: new Date().toISOString(),
+      client: { 
+        id: '3', 
+        name: 'StartupCo',
+        status: 'ACTIVE' as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      },
+      issueDate: new Date().toISOString(),
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      subtotal: '750.00',
+      tax: '75.00',
+      total: '825.00', 
+      status: 'DRAFT',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
   ];
   const isLoading = false;
@@ -80,7 +127,7 @@ export default function InvoicesPage() {
 
   if (error) {
     return (
-      <ModernLayout>
+      <DashboardLayout>
         <div className="space-y-8">
           <div className="border-b border-gray-200 pb-6">
             <h1 className="text-3xl font-bold text-gray-900">Invoices</h1>
@@ -95,141 +142,82 @@ export default function InvoicesPage() {
             </div>
           </div>
         </div>
-      </ModernLayout>
+      </DashboardLayout>
     );
   }
 
   return (
-    <ModernLayout>
+    <DashboardLayout>
       <div className="space-y-8">
         {/* Enhanced Header with Actions */}
-        <div 
-          className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6"
-          style={{ 
-            backgroundColor: '#ffffff', 
-            borderRadius: '0.75rem', 
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-            padding: '1.5rem',
-            marginBottom: '1.5rem'
-          }}
-        >
-          <div 
-            className="flex justify-between items-center"
-            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <div>
-              <h1 
-                className="text-3xl font-bold text-gray-900"
-                style={{ fontSize: '1.875rem', fontWeight: 'bold', color: '#111827' }}
-              >
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <h1 className="text-4xl font-bold mb-2" style={{background: 'linear-gradient(to right, #2563eb, #9333ea, #4f46e5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
                 Invoices
               </h1>
-              <p 
-                className="text-gray-600 mt-2"
-                style={{ color: '#4B5563', marginTop: '0.5rem' }}
-              >
+              <p className="text-gray-600 text-lg mb-6">
                 Manage and track your invoices
               </p>
-              <div 
-                className="flex items-center space-x-6 mt-4"
-                style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginTop: '1rem' }}
-              >
-                <div>
-                  <span 
-                    className="text-2xl font-bold text-blue-600"
-                    style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2563eb' }}
-                  >
-                    {invoices?.length || 0}
-                  </span>
-                  <p 
-                    className="text-sm text-gray-500"
-                    style={{ fontSize: '14px', color: '#6b7280' }}
-                  >
-                    Total Invoices
-                  </p>
+              
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #3b82f6, #4f46e5)'}}>
+                      <span className="text-white font-bold text-sm">{invoices?.length || 0}</span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Total Invoices</p>
+                      <p className="text-xs text-gray-500">All created</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span 
-                    className="text-2xl font-bold text-green-600"
-                    style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#059669' }}
-                  >
-                    {invoices?.filter(i => i.status === 'PAID').length || 0}
-                  </span>
-                  <p 
-                    className="text-sm text-gray-500"
-                    style={{ fontSize: '14px', color: '#6b7280' }}
-                  >
-                    Paid
-                  </p>
+                
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #10b981, #0d9488)'}}>
+                      <span className="text-white font-bold text-sm">{invoices?.filter(i => i.status === 'PAID').length || 0}</span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Paid</p>
+                      <p className="text-xs text-gray-500">Completed</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <span 
-                    className="text-2xl font-bold text-orange-600"
-                    style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ea580c' }}
-                  >
-                    {invoices?.filter(i => i.status === 'SENT' || i.status === 'DRAFT').length || 0}
-                  </span>
-                  <p 
-                    className="text-sm text-gray-500"
-                    style={{ fontSize: '14px', color: '#6b7280' }}
-                  >
-                    Pending
-                  </p>
+                
+                <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #f97316, #dc2626)'}}>
+                      <span className="text-white font-bold text-sm">{invoices?.filter(i => i.status === 'SENT' || i.status === 'DRAFT').length || 0}</span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Pending</p>
+                      <p className="text-xs text-gray-500">Awaiting payment</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <button
-              onClick={handleAdd}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-              style={{
-                padding: '0.75rem 1.5rem',
-                backgroundColor: '#2563eb',
-                color: '#ffffff',
-                borderRadius: '0.5rem',
-                fontWeight: '500',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              Create Invoice
-            </button>
+            
+            <div className="ml-8">
+              <button
+                onClick={handleAdd}
+                className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                style={{background: 'linear-gradient(to right, #2563eb, #4f46e5)'}}
+              >
+                <span className="mr-2">+</span>
+                Create Invoice
+              </button>
+            </div>
           </div>
         </div>
 
         {isLoading ? (
-          <div 
-            className="bg-white rounded-xl border border-gray-200 shadow-sm p-12"
-            style={{ 
-              backgroundColor: '#ffffff', 
-              borderRadius: '0.75rem', 
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
-              padding: '3rem',
-              textAlign: 'center'
-            }}
-          >
-            <div 
-              className="flex flex-col items-center"
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <div 
-                className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"
-                style={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  borderRadius: '50%',
-                  border: '2px solid transparent',
-                  borderBottom: '2px solid #2563eb',
-                  marginBottom: '1rem'
-                }}
-              ></div>
-              <p 
-                className="text-gray-600"
-                style={{ color: '#4B5563', fontSize: '16px' }}
-              >
-                Loading invoices...
-              </p>
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center">
+            <div className="flex flex-col items-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+              <p className="text-gray-600">Loading invoices...</p>
             </div>
           </div>
         ) : (
@@ -243,6 +231,6 @@ export default function InvoicesPage() {
           />
         )}
       </div>
-    </ModernLayout>
+    </DashboardLayout>
   );
 }

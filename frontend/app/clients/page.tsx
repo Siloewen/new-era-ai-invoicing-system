@@ -114,75 +114,73 @@ export default function ClientsPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8 animate-fade-in">
+      <div className="space-y-8">
         {/* Modern Header */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-modern rounded-3xl opacity-50"></div>
-          <div className="relative card-gradient p-8">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h1 className="text-4xl font-bold text-gradient mb-2">
-                  Clients
-                </h1>
-                <p className="text-gray-600 text-lg mb-6">
-                  Manage your client relationships and information
-                </p>
+        <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <h1 className="text-4xl font-bold mb-2" style={{background: 'linear-gradient(to right, #2563eb, #9333ea, #4f46e5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+                Clients
+              </h1>
+              <p className="text-gray-600 text-lg mb-6">
+                Manage your client relationships and information
+              </p>
+              
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #3b82f6, #4f46e5)'}}>
+                      <span className="text-white font-bold text-sm">{clients?.length || 0}</span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Total Clients</p>
+                      <p className="text-xs text-gray-500">All registered</p>
+                    </div>
+                  </div>
+                </div>
                 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                  <div className="stat-card stat-card-blue p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">{clients?.length || 0}</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600 font-medium">Total Clients</p>
-                        <p className="text-xs text-gray-500">All registered</p>
-                      </div>
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #10b981, #0d9488)'}}>
+                      <span className="text-white font-bold text-sm">{clients?.filter(c => c.status === 'ACTIVE').length || 0}</span>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Active</p>
+                      <p className="text-xs text-gray-500">Currently working</p>
                     </div>
                   </div>
-                  
-                  <div className="stat-card stat-card-emerald p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">{clients?.filter(c => c.status === 'ACTIVE').length || 0}</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600 font-medium">Active</p>
-                        <p className="text-xs text-gray-500">Currently working</p>
-                      </div>
+                </div>
+                
+                <div className="bg-purple-50 border border-purple-100 rounded-xl p-4 hover:shadow-md transition-all duration-300">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{background: 'linear-gradient(to bottom right, #8b5cf6, #ec4899)'}}>
+                      <span className="text-white font-bold text-sm">{clients?.filter(c => c.status !== 'ACTIVE').length || 0}</span>
                     </div>
-                  </div>
-                  
-                  <div className="stat-card stat-card-purple p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">{clients?.filter(c => c.status === 'INACTIVE').length || 0}</span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600 font-medium">Inactive</p>
-                        <p className="text-xs text-gray-500">On hold</p>
-                      </div>
+                    <div>
+                      <p className="text-sm text-gray-700 font-semibold">Inactive</p>
+                      <p className="text-xs text-gray-500">On hold</p>
                     </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="ml-8">
-                <button
-                  onClick={() => setShowForm(true)}
-                  className="btn-primary group"
-                >
-                  <span className="mr-2">+</span>
-                  Add New Client
-                </button>
-              </div>
+            </div>
+            
+            <div className="ml-8">
+              <button
+                onClick={() => setShowForm(true)}
+                className="text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                style={{background: 'linear-gradient(to right, #2563eb, #4f46e5)'}}
+              >
+                <span className="mr-2">+</span>
+                Add New Client
+              </button>
             </div>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="card-gradient p-12 text-center animate-pulse">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center">
             <div className="flex flex-col items-center">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 animate-spin">
                 <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full"></div>
@@ -192,7 +190,7 @@ export default function ClientsPage() {
             </div>
           </div>
         ) : (
-          <div className="animate-slide-up">
+          <div>
             <ClientList
               clients={clients}
               onAdd={handleAdd}

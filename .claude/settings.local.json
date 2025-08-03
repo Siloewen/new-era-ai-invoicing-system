@@ -43,7 +43,12 @@
       "Bash(npx kill-port:*)",
       "Bash(render services create:*)",
       "Bash(render:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(npm search:*)",
+      "Bash(where npx)",
+      "Bash(npx supabase:*)",
+      "Bash(npx @supabase/mcp-server-supabase:*)",
+      "WebFetch(domain:supabase.com)"
     ],
     "deny": []
   }
